@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRANA & APANA | Joyería Alquímica, Cuarzos y Alta Magia Holística en Cali</title>
+    <meta name="description" content="Amuletos de protección, joyería alquímica en cuarzos seleccionados y rituales de reconexión. Cali, Colombia.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        prana: {
+                            base: '#0C0712',
+                            surface: '#150C20',
+                            gold: '#D9A05B',
+                            lightgold: '#F3DEBA',
+                            pearl: '#F5EFE6',
+                            muted: '#9E91A8',
+                            border: 'rgba(217, 160, 91, 0.2)'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="bg-[#0C0712] text-[#F5EFE6] font-sans antialiased selection:bg-[#D9A05B] selection:text-[#0C0712] relative overflow-x-hidden min-h-screen flex flex-col">
+
+    <!-- PRELOADER -->
+    <div id="preloader" class="fixed inset-0 z-[100] bg-[#0C0712] flex flex-col items-center justify-center transition-opacity duration-700 pointer-events-none">
+        <div class="relative flex items-center justify-center mb-6">
+            <div class="w-28 h-28 border border-[#D9A05B]/30 rounded-full animate-ping absolute"></div>
+            <div class="w-20 h-20 border-2 border-t-[#D9A05B] border-r-transparent border-b-[#D9A05B] border-l-transparent rounded-full animate-spin"></div>
+            <img src="./prana.png" alt="PRANA" class="h-10 w-auto object-contain absolute" />
+        </div>
+        <p class="font-serif italic text-[#F3DEBA] text-sm tracking-[0.3em] uppercase animate-pulse">Sintonizando la energía vital...</p>
+    </div>
+
+    <!-- BACKGROUND STARLIGHT CANVAS -->
+    <canvas id="starlight-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- TOP HEADER -->
+    <header class="sticky top-0 z-40 bg-[#0C0712]/85 backdrop-blur-md border-b border-[#D9A05B]/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Left Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="./prana.png" alt="PRANA" class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+                <div class="flex flex-col">
+                    <span class="font-serif text-2xl font-semibold tracking-wider text-[#F5EFE6] group-hover:text-[#D9A05B] transition-colors">PRANA</span>
+                    <span class="text-[10px] tracking-[0.25em] text-[#9E91A8] uppercase font-light">PRANA & APANA</span>
+                </div>
+            </a>
+
+            <!-- Center Nav Desktop -->
+            <nav class="hidden lg:flex items-center gap-8 font-sans text-xs uppercase tracking-[0.2em] font-medium text-[#F5EFE6]/90">
+                <a href="#catalogo" class="hover:text-[#D9A05B] transition-colors py-2">Colección</a>
+
+                <!-- Dropdown Intención -->
+                <div class="relative group">
+                    <button class="flex items-center gap-1 hover:text-[#D9A05B] transition-colors py-2 focus:outline-none">
+                        <span>Por Intención</span>
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-[#D9A05B]"></i>
+                    </button>
+                    <div class="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="bg-[#150C20] border border-[#D9A05B]/30 rounded-lg shadow-2xl p-2 space-y-1 backdrop-blur-xl">
+                            <button onclick="filterByIntention('proteccion')" class="w-full text-left px-4 py-2.5 text-xs text-[#F5EFE6] hover:bg-[#D9A05B]/15 hover:text-[#D9A05B] rounded transition-colors flex items-center gap-2">
+                                <i data-lucide="shield" class="w-4 h-4 text-[#D9A05B]"></i>
+                                <span>Protección & Escudo</span>
+                            </button>
+                            <button onclick="filterByIntention('abundancia')" class="w-full text-left px-4 py-2.5 text-xs text-[#F5EFE6] hover:bg-[#D9A05B]/15 hover:text-[#D9A05B] rounded transition-colors flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-[#D9A05B]"></i>
+                                <span>Abundancia & Prosperidad</span>
+                            </button>
+                            <button onclick="filterByIntention('calma')" class="w-full text-left px-4 py-2.5 text-xs text-[#F5EFE6] hover:bg-[#D9A05B]/15 hover:text-[#D9A05B] rounded transition-colors flex items-center gap-2">
+                                <i data-lucide="moon" class="w-4 h-4 text-[#D9A05B]"></i>
+                                <span>Paz Mental & Calma</span>
+                            </button>
+                            <button onclick="filterByIntention('amor')" class="w-full text-left px-4 py-2.5 text-xs text-[#F5EFE6] hover:bg-[#D9A05B]/15 hover:text-[#D9A05B] rounded transition-colors flex items-center gap-2">
+                                <i data-lucide="heart" class="w-4 h-4 text-[#D9A05B]"></i>
+                                <span>Amor Propio & Sanación</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openOracleModal()" class="hover:text-[#D9A05B] transition-colors py-2 flex items-center gap-1.5 text-[#F3DEBA]">
+                    <i data-lucide="compass" class="w-4 h-4 text-[#D9A05B] animate-spin-slow"></i>
+                    <span>Oráculo Místico (IA)</span>
+                </button>
+
+                <a href="#blog" class="hover:text-[#D9A05B] transition-colors py-2">Grimorio</a>
+                <a href="#rituales" class="hover:text-[#D9A05B] transition-colors py-2">Rituales</a>
+            </nav>
+
+            <!-- Right Controls -->
+            <div class="flex items-center gap-4">
+                <button onclick="openCartDrawer()" class="relative p-2.5 rounded-full hover:bg-[#D9A05B]/10 transition-colors text-[#F5EFE6] focus:outline-none" aria-label="Abrir Bolsa de Compras">
+                    <i data-lucide="shopping-bag" class="w-6 h-6 text-[#D9A05B]"></i>
+                    <span id="cart-badge-count" class="absolute -top-1 -right-1 bg-[#D9A05B] text-[#0C0712] font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#0C0712] transition-transform scale-100">0</span>
+                </button>
+
+                <!-- Mobile Hamburger Button -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-[#F5EFE6] hover:bg-[#D9A05B]/10 focus:outline-none" aria-label="Menú Móvil">
+                    <i data-lucide="menu" class="w-6 h-6 text-[#D9A05B]"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU DRAWER -->
+    <div id="mobile-menu-drawer" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 pointer-events-none lg:hidden">
+        <div class="fixed inset-0 bg-[#0C0712]/80 backdrop-blur-md" onclick="toggleMobileMenu()"></div>
+        <div class="fixed right-0 top-0 bottom-0 w-80 bg-[#150C20] border-l border-[#D9A05B]/30 p-6 flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300 pointer-events-auto" id="mobile-menu-panel">
+            <div class="space-y-6">
+                <div class="flex items-center justify-between border-b border-[#D9A05B]/20 pb-4">
+                    <div class="flex items-center gap-2">
+                        <img src="./prana.png" alt="PRANA" class="h-8 w-auto" />
+                        <span class="font-serif text-xl tracking-wider text-[#F5EFE6]">PRANA</span>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="p-2 text-[#9E91A8] hover:text-[#D9A05B]">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <div class="flex flex-col space-y-4 font-sans text-sm uppercase tracking-[0.15em]">
+                    <a href="#catalogo" onclick="toggleMobileMenu()" class="text-[#F5EFE6] hover:text-[#D9A05B] py-2 flex items-center gap-3">
+                        <i data-lucide="gem" class="w-4 h-4 text-[#D9A05B]"></i>
+                        <span>Colección Completa</span>
+                    </a>
+
+                    <div class="space-y-2 pl-2 border-l border-[#D9A05B]/20 my-2">
+                        <p class="text-[10px] text-[#9E91A8] tracking-[0.2em] font-semibold uppercase mb-1">Por Intención</p>
+                        <button onclick="filterByIntention('proteccion'); toggleMobileMenu();" class="w-full text-left text-xs text-[#F5EFE6] hover:text-[#D9A05B] py-1.5 flex items-center gap-2">
+                            <i data-lucide="shield" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Protección
+                        </button>
+                        <button onclick="filterByIntention('abundancia'); toggleMobileMenu();" class="w-full text-left text-xs text-[#F5EFE6] hover:text-[#D9A05B] py-1.5 flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Abundancia
+                        </button>
+                        <button onclick="filterByIntention('calma'); toggleMobileMenu();" class="w-full text-left text-xs text-[#F5EFE6] hover:text-[#D9A05B] py-1.5 flex items-center gap-2">
+                            <i data-lucide="moon" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Paz Mental
+                        </button>
+                        <button onclick="filterByIntention('amor'); toggleMobileMenu();" class="w-full text-left text-xs text-[#F5EFE6] hover:text-[#D9A05B] py-1.5 flex items-center gap-2">
+                            <i data-lucide="heart" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Amor Propio
+                        </button>
+                    </div>
+
+                    <button onclick="openOracleModal(); toggleMobileMenu();" class="text-left text-[#F3DEBA] hover:text-[#D9A05B] py-2 flex items-center gap-3">
+                        <i data-lucide="compass" class="w-4 h-4 text-[#D9A05B]"></i>
+                        <span>Oráculo Místico (IA)</span>
+                    </button>
+
+                    <a href="#blog" onclick="toggleMobileMenu()" class="text-[#F5EFE6] hover:text-[#D9A05B] py-2 flex items-center gap-3">
+                        <i data-lucide="book-open" class="w-4 h-4 text-[#D9A05B]"></i>
+                        <span>Grimorio / Blog</span>
+                    </a>
+
+                    <a href="#rituales" onclick="toggleMobileMenu()" class="text-[#F5EFE6] hover:text-[#D9A05B] py-2 flex items-center gap-3">
+                        <i data-lucide="flame" class="w-4 h-4 text-[#D9A05B]"></i>
+                        <span>Rituales & Cali</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-[#D9A05B]/20 pt-4 space-y-3">
+                <a href="https://wa.me/573113296313" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-lg bg-[#D9A05B]/10 hover:bg-[#D9A05B]/20 border border-[#D9A05B]/30 text-[#F3DEBA] text-xs font-medium uppercase tracking-wider flex items-center justify-center gap-2 transition-colors">
+                    <i data-lucide="message-circle" class="w-4 h-4 text-[#D9A05B]"></i>
+                    <span>Contacto Directo Cali</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow z-10 relative">
+
+        <!-- HERO SECTION -->
+        <section class="relative min-h-[85vh] flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+            <div class="max-w-4xl mx-auto text-center space-y-8 relative z-10">
+
+                <!-- Pill Accent -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D9A05B]/40 bg-[#150C20]/60 backdrop-blur-md">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D9A05B]"></i>
+                    <span class="font-sans text-[11px] uppercase tracking-[0.25em] text-[#F3DEBA] font-medium">JOYERÍA ALQUÍMICA EN CALI, COLOMBIA</span>
+                </div>
+
+                <!-- Central Medallion -->
+                <div class="flex justify-center my-2">
+                    <div class="relative p-3 rounded-full border border-[#D9A05B]/30 bg-[#150C20]/40 backdrop-blur-md shadow-2xl group">
+                        <div class="absolute inset-0 rounded-full bg-[#D9A05B]/10 blur-xl group-hover:bg-[#D9A05B]/20 transition-all duration-500"></div>
+                        <img src="./prana.png" alt="PRANA Seal" class="h-16 w-16 object-contain relative z-10" />
+                    </div>
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl font-normal tracking-tight text-[#F5EFE6] leading-none">
+                    LA PAUSA <span class="font-serif italic font-light text-[#F3DEBA] drop-shadow-[0_0_25px_rgba(217,160,91,0.25)]">SAGRADA</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="font-sans text-base sm:text-lg lg:text-xl text-[#9E91A8] max-w-2xl mx-auto font-light leading-relaxed">
+                    Amuletos de protección, joyería alquímica en cuarzos seleccionados y el pulso sutil de <span class="text-[#F5EFE6] font-medium">Prana & Apana</span>. Consagrados para elevar tu presencia.
+                </p>
+
+                <!-- Dual CTAs -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a href="#catalogo" class="w-full sm:w-auto px-8 py-4 rounded-md bg-[#D9A05B] text-[#0C0712] font-semibold text-xs uppercase tracking-[0.2em] hover:bg-[#F3DEBA] transition-all duration-300 shadow-lg shadow-[#D9A05B]/20 flex items-center justify-center gap-2 group">
+                        <span>EXPLORAR TESOROS</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                    </a>
+
+                    <button onclick="openOracleModal()" class="w-full sm:w-auto px-8 py-4 rounded-md border border-[#D9A05B]/50 bg-[#150C20]/50 text-[#F5EFE6] font-medium text-xs uppercase tracking-[0.2em] hover:bg-[#D9A05B]/10 hover:border-[#D9A05B] transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md">
+                        <i data-lucide="compass" class="w-4 h-4 text-[#D9A05B]"></i>
+                        <span>CONSULTAR EL ORÁCULO</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST BAR (MATCHING SPEC SECTION 2.3) -->
+        <section class="border-y border-[#D9A05B]/20 bg-[#150C20]/40 backdrop-blur-md py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Column 1 -->
+                    <div class="flex items-center justify-center md:justify-start gap-4 p-4 rounded-xl border border-[#D9A05B]/10 bg-[#0C0712]/30">
+                        <div class="p-3 rounded-full bg-[#D9A05B]/10 border border-[#D9A05B]/20 text-[#D9A05B]">
+                            <i data-lucide="shield" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-lg font-semibold text-[#F5EFE6] tracking-wide">PIEZAS CONSAGRADAS</h3>
+                            <p class="text-xs text-[#9E91A8]">Cuarzos 100% naturales purificados</p>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="flex items-center justify-center md:justify-start gap-4 p-4 rounded-xl border border-[#D9A05B]/10 bg-[#0C0712]/30">
+                        <div class="p-3 rounded-full bg-[#D9A05B]/10 border border-[#D9A05B]/20 text-[#D9A05B]">
+                            <i data-lucide="compass" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-lg font-semibold text-[#F5EFE6] tracking-wide">ENVÍOS EN CALI</h3>
+                            <p class="text-xs text-[#9E91A8]">Express local & Pago contra entrega</p>
+                        </div>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="flex items-center justify-center md:justify-start gap-4 p-4 rounded-xl border border-[#D9A05B]/10 bg-[#0C0712]/30">
+                        <div class="p-3 rounded-full bg-[#D9A05B]/10 border border-[#D9A05B]/20 text-[#D9A05B]">
+                            <i data-lucide="sparkles" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-lg font-semibold text-[#F5EFE6] tracking-wide">DESPACHOS NACIONALES</h3>
+                            <p class="text-xs text-[#9E91A8]">Envíos seguros a toda Colombia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATALOG SECTION -->
+        <section id="catalogo" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-[#D9A05B]/20 gap-6">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.25em] text-[#D9A05B] font-semibold">AMULETOS Y CRISTALES</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-medium text-[#F5EFE6] mt-1">Colección Alquímica</h2>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap items-center gap-2" id="category-filter-buttons">
+                    <button onclick="filterByCategory('todos')" class="cat-filter-btn active px-4 py-2 rounded-full border text-xs uppercase tracking-wider font-medium transition-all duration-300 bg-[#D9A05B] text-[#0C0712] border-[#D9A05B]" data-cat="todos">
+                        Todos
+                    </button>
+                    <button onclick="filterByCategory('collares')" class="cat-filter-btn px-4 py-2 rounded-full border border-[#D9A05B]/20 text-[#9E91A8] hover:text-[#F5EFE6] hover:border-[#D9A05B]/50 text-xs uppercase tracking-wider font-medium transition-all duration-300" data-cat="collares">
+                        Collares
+                    </button>
+                    <button onclick="filterByCategory('pulseras')" class="cat-filter-btn px-4 py-2 rounded-full border border-[#D9A05B]/20 text-[#9E91A8] hover:text-[#F5EFE6] hover:border-[#D9A05B]/50 text-xs uppercase tracking-wider font-medium transition-all duration-300" data-cat="pulseras">
+                        Pulseras & Anillos
+                    </button>
+                    <button onclick="filterByCategory('cristales')" class="cat-filter-btn px-4 py-2 rounded-full border border-[#D9A05B]/20 text-[#9E91A8] hover:text-[#F5EFE6] hover:border-[#D9A05B]/50 text-xs uppercase tracking-wider font-medium transition-all duration-300" data-cat="cristales">
+                        Cristales Maestros
+                    </button>
+                    <button onclick="filterByCategory('espacio')" class="cat-filter-btn px-4 py-2 rounded-full border border-[#D9A05B]/20 text-[#9E91A8] hover:text-[#F5EFE6] hover:border-[#D9A05B]/50 text-xs uppercase tracking-wider font-medium transition-all duration-300" data-cat="espacio">
+                        Espacio & Orgonitas
+                    </button>
+                    <button onclick="filterByCategory('rituales')" class="cat-filter-btn px-4 py-2 rounded-full border border-[#D9A05B]/20 text-[#9E91A8] hover:text-[#F5EFE6] hover:border-[#D9A05B]/50 text-xs uppercase tracking-wider font-medium transition-all duration-300" data-cat="rituales">
+                        Kits Rituales
+                    </button>
+                </div>
+            </div>
+
+            <!-- Intention Bar Prompt -->
+            <div class="bg-[#150C20] border border-[#D9A05B]/20 rounded-xl p-4 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-[#D9A05B]"></i>
+                    <span class="text-xs sm:text-sm text-[#F5EFE6]">Filtrar por propósito o consulta energética:</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                    <button onclick="filterByIntention('proteccion')" class="px-3 py-1.5 rounded-lg bg-[#0C0712] border border-[#D9A05B]/20 text-[#F5EFE6] hover:border-[#D9A05B] text-xs transition-colors flex items-center gap-1.5">
+                        <i data-lucide="shield" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Protección
+                    </button>
+                    <button onclick="filterByIntention('abundancia')" class="px-3 py-1.5 rounded-lg bg-[#0C0712] border border-[#D9A05B]/20 text-[#F5EFE6] hover:border-[#D9A05B] text-xs transition-colors flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Abundancia
+                    </button>
+                    <button onclick="filterByIntention('calma')" class="px-3 py-1.5 rounded-lg bg-[#0C0712] border border-[#D9A05B]/20 text-[#F5EFE6] hover:border-[#D9A05B] text-xs transition-colors flex items-center gap-1.5">
+                        <i data-lucide="moon" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Paz Mental
+                    </button>
+                    <button onclick="filterByIntention('amor')" class="px-3 py-1.5 rounded-lg bg-[#0C0712] border border-[#D9A05B]/20 text-[#F5EFE6] hover:border-[#D9A05B] text-xs transition-colors flex items-center gap-1.5">
+                        <i data-lucide="heart" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Amor Propio
+                    </button>
+                    <button onclick="openOracleModal()" class="px-3 py-1.5 rounded-lg bg-[#D9A05B]/20 border border-[#D9A05B]/50 text-[#F3DEBA] hover:bg-[#D9A05B]/30 text-xs font-medium transition-colors flex items-center gap-1.5">
+                        <i data-lucide="compass" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Oráculo IA
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Dynamically populated via app.js -->
+            </div>
+        </section>
+
+        <!-- GRIMORIO MÍSTICO / BLOG SECTION -->
+        <section id="blog" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#D9A05B]/20">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-xs uppercase tracking-[0.25em] text-[#D9A05B] font-semibold">SABIDURÍA ANCESTRAL</span>
+                <h2 class="font-serif text-4xl sm:text-5xl font-medium text-[#F5EFE6]">El Grimorio de PRANA</h2>
+                <p class="text-sm text-[#9E91A8] font-light">Ensayos sobre la metafísica de los minerales, la biología sutil y la armonización del hogar.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="blog-grid">
+                <!-- Dynamically populated via app.js -->
+            </div>
+        </section>
+
+        <!-- RITUALES & TALLERES EN CALI SECTION -->
+        <section id="rituales" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#D9A05B]/20">
+            <div class="bg-[#150C20] border border-[#D9A05B]/30 rounded-2xl p-8 lg:p-12 relative overflow-hidden shadow-2xl">
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-[#D9A05B]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+                    <div class="space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D9A05B]/30 bg-[#0C0712]/50 text-xs text-[#F3DEBA] font-medium">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#D9A05B]"></i>
+                            <span>SANTUARIO PRESENCIAL EN CALI</span>
+                        </div>
+
+                        <h2 class="font-serif text-4xl lg:text-5xl font-medium text-[#F5EFE6]">
+                            Talleres de Consagración & Alquimia Personal
+                        </h2>
+
+                        <p class="text-sm text-[#9E91A8] leading-relaxed font-light">
+                            Te invitamos a vivir la experiencia inmersiva de consagrar tu propio amuleto en nuestras veladas privadas en Cali. Aprende el arte de la programación mineral, la medición del pulso de Prana & Apana y la armonización de espacios.
+                        </p>
+
+                        <div class="space-y-3 pt-2">
+                            <div class="flex items-center gap-3 text-xs text-[#F5EFE6]">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-[#D9A05B]"></i>
+                                <span>Kits completos de minerales y hierbas incluidos</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-xs text-[#F5EFE6]">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-[#D9A05B]"></i>
+                                <span>Cupos limitados por sesión para atención personalizada</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-xs text-[#F5EFE6]">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-[#D9A05B]"></i>
+                                <span>Atención personalizada y diagnóstico energético individual</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <a href="https://wa.me/573113296313?text=Hola%20PRANA,%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20los%20pr%C3%B3ximos%20talleres%20y%20rituales%20presenciales%20en%20Cali." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-[#D9A05B] text-[#0C0712] font-semibold text-xs uppercase tracking-wider hover:bg-[#F3DEBA] transition-colors shadow-lg">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                <span>Consultar Próximas Fechas por WhatsApp</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div class="aspect-4/3 rounded-xl overflow-hidden border border-[#D9A05B]/30 shadow-2xl relative">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1000&q=80" alt="Ritual PRANA" class="w-full h-full object-cover filter brightness-90 hover:scale-105 transition-transform duration-700" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0C0712] via-transparent to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4 p-4 rounded-lg bg-[#0C0712]/80 backdrop-blur-md border border-[#D9A05B]/20">
+                                <p class="font-serif italic text-[#F3DEBA] text-sm">"Donde la intención se encuentra con la geometría sagrada de la tierra."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0C0712] border-t border-[#D9A05B]/20 py-16 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+
+                <!-- Brand Info -->
+                <div class="space-y-4 md:col-span-1">
+                    <div class="flex items-center gap-3">
+                        <img src="./prana.png" alt="PRANA" class="h-10 w-auto" />
+                        <span class="font-serif text-2xl tracking-wider text-[#F5EFE6]">PRANA</span>
+                    </div>
+                    <p class="text-xs text-[#9E91A8] font-light leading-relaxed">
+                        Joyería alquímica en cuarzos seleccionados, cristales maestros y amuletos consagrados en Cali, Colombia.
+                    </p>
+                    <p class="text-[11px] text-[#D9A05B] font-mono">
+                        Cali, Valle del Cauca - Colombia
+                    </p>
+                </div>
+
+                <!-- Navigation -->
+                <div>
+                    <h4 class="font-serif text-lg font-semibold text-[#F5EFE6] mb-4 tracking-wider">Explorar</h4>
+                    <ul class="space-y-2 text-xs text-[#9E91A8]">
+                        <li><a href="#catalogo" class="hover:text-[#D9A05B] transition-colors">Colección Holística</a></li>
+                        <li><button onclick="openOracleModal()" class="hover:text-[#D9A05B] transition-colors">Oráculo Místico (IA)</button></li>
+                        <li><a href="#blog" class="hover:text-[#D9A05B] transition-colors">Grimorio / Blog</a></li>
+                        <li><a href="#rituales" class="hover:text-[#D9A05B] transition-colors">Rituales en Cali</a></li>
+                    </ul>
+                </div>
+
+                <!-- Payment & Shipping Info -->
+                <div>
+                    <h4 class="font-serif text-lg font-semibold text-[#F5EFE6] mb-4 tracking-wider">Despachos & Pago</h4>
+                    <ul class="space-y-2 text-xs text-[#9E91A8]">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Envío Express Cali ($9.000 COP)</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Envío Nacional Colombia ($14.000 COP)</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Nequi / Daviplata / Bre-B</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-[#D9A05B]"></i> Pago Contra Entrega en Cali</li>
+                    </ul>
+                </div>
+
+                <!-- Contact & WhatsApp -->
+                <div>
+                    <h4 class="font-serif text-lg font-semibold text-[#F5EFE6] mb-4 tracking-wider">Atención Mística</h4>
+                    <p class="text-xs text-[#9E91A8] mb-4 font-light">¿Tienes dudas sobre qué cuarzo elegir para tu momento actual?</p>
+                    <a href="https://wa.me/573113296313" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#D9A05B]/10 border border-[#D9A05B]/30 text-[#F3DEBA] hover:bg-[#D9A05B]/20 text-xs font-medium transition-colors">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-[#D9A05B]"></i>
+                        <span>WhatsApp: +57 311 329 6313</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-[#D9A05B]/10 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#9E91A8]">
+                <p>&copy; <span id="year-span">2025</span> PRANA & APANA. Todos los derechos reservados.</p>
+                <p class="mt-2 sm:mt-0 font-serif italic text-[#F3DEBA]">"La Pausa Sagrada en cada respiración."</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: PRODUCT DETAIL ("FICHA HOLÍSTICA") -->
+    <div id="product-detail-modal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-[#0C0712]/80 backdrop-blur-md" onclick="closeProductDetailModal()"></div>
+        <div class="bg-[#150C20] border border-[#D9A05B]/30 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative z-10 shadow-2xl space-y-6">
+            <button onclick="closeProductDetailModal()" class="absolute top-4 right-4 p-2 text-[#9E91A8] hover:text-[#D9A05B] rounded-full hover:bg-[#D9A05B]/10 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="product-detail-content" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: BLOG READER ("GRIMORIO READER") -->
+    <div id="blog-reader-modal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-[#0C0712]/80 backdrop-blur-md" onclick="closeBlogReaderModal()"></div>
+        <div class="bg-[#150C20] border border-[#D9A05B]/30 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-10 relative z-10 shadow-2xl">
+            <button onclick="closeBlogReaderModal()" class="absolute top-4 right-4 p-2 text-[#9E91A8] hover:text-[#D9A05B] rounded-full hover:bg-[#D9A05B]/10 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="blog-reader-content" class="space-y-6">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ORÁCULO MÍSTICO (IA STATE MACHINE) -->
+    <div id="oracle-modal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-[#0C0712]/85 backdrop-blur-md" onclick="closeOracleModal()"></div>
+        <div class="bg-[#150C20] border border-[#D9A05B]/40 rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative z-10 shadow-2xl">
+            <button onclick="closeOracleModal()" class="absolute top-4 right-4 p-2 text-[#9E91A8] hover:text-[#D9A05B] rounded-full hover:bg-[#D9A05B]/10 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <!-- State Container -->
+            <div id="oracle-container" class="space-y-6">
+                <!-- Dynamically rendered via JS state machine -->
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAWER: CART SLIDE-OUT PANEL -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="fixed inset-0 bg-[#0C0712]/80 backdrop-blur-md" onclick="closeCartDrawer()"></div>
+        <div class="fixed right-0 top-0 bottom-0 w-full sm:w-[480px] bg-[#150C20] border-l border-[#D9A05B]/30 p-6 flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300 pointer-events-auto" id="cart-drawer-panel">
+
+            <!-- Drawer Header -->
+            <div>
+                <div class="flex items-center justify-between border-b border-[#D9A05B]/20 pb-4 mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-[#D9A05B]"></i>
+                        <h3 class="font-serif text-2xl font-semibold text-[#F5EFE6]">Tu Bolsa Holística</h3>
+                    </div>
+                    <button onclick="closeCartDrawer()" class="p-2 text-[#9E91A8] hover:text-[#D9A05B]">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Free Shipping Progress Bar -->
+                <div class="bg-[#0C0712] border border-[#D9A05B]/20 p-3 rounded-lg mb-4 space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span id="shipping-progress-text" class="text-[#F3DEBA] font-medium">Calculando envío gratis en Cali...</span>
+                    </div>
+                    <div class="w-full bg-[#150C20] h-2 rounded-full overflow-hidden border border-[#D9A05B]/10">
+                        <div id="shipping-progress-bar" class="bg-[#D9A05B] h-full transition-all duration-500 w-0"></div>
+                    </div>
+                </div>
+
+                <!-- Cart Items List Container -->
+                <div id="cart-items-container" class="space-y-4 max-h-[35vh] overflow-y-auto pr-1">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Drawer Footer / Checkout Form -->
+            <div class="border-t border-[#D9A05B]/20 pt-4 space-y-4 bg-[#150C20]">
+
+                <!-- Shipping Method Selector -->
+                <div class="space-y-2">
+                    <label class="text-[11px] font-semibold uppercase tracking-wider text-[#D9A05B]">Destino de Envío</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="setShippingMethod('cali')" id="ship-btn-cali" class="p-2.5 rounded-lg border text-left text-xs transition-colors bg-[#D9A05B]/20 border-[#D9A05B] text-[#F5EFE6]">
+                            <p class="font-semibold">Local Cali Express</p>
+                            <p class="text-[10px] text-[#9E91A8]">$9.000 COP (Gratis &gt;= $120.000)</p>
+                        </button>
+                        <button type="button" onclick="setShippingMethod('nacional')" id="ship-btn-nacional" class="p-2.5 rounded-lg border text-left text-xs transition-colors bg-[#0C0712] border-[#D9A05B]/20 text-[#9E91A8]">
+                            <p class="font-semibold">Nacional Colombia</p>
+                            <p class="text-[10px] text-[#9E91A8]">$14.000 COP a todo el país</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Customer Form -->
+                <div class="space-y-2 text-xs">
+                    <input type="text" id="cust-name" placeholder="Nombre Completo *" class="w-full px-3 py-2 bg-[#0C0712] border border-[#D9A05B]/20 rounded-md text-[#F5EFE6] placeholder-[#9E91A8]/60 focus:outline-none focus:border-[#D9A05B]" />
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="tel" id="cust-phone" placeholder="WhatsApp (+57) *" class="w-full px-3 py-2 bg-[#0C0712] border border-[#D9A05B]/20 rounded-md text-[#F5EFE6] placeholder-[#9E91A8]/60 focus:outline-none focus:border-[#D9A05B]" />
+                        <input type="text" id="cust-city" placeholder="Ciudad (ej: Cali) *" value="Cali" class="w-full px-3 py-2 bg-[#0C0712] border border-[#D9A05B]/20 rounded-md text-[#F5EFE6] placeholder-[#9E91A8]/60 focus:outline-none focus:border-[#D9A05B]" />
+                    </div>
+                    <input type="text" id="cust-address" placeholder="Dirección de Entrega y Barrio *" class="w-full px-3 py-2 bg-[#0C0712] border border-[#D9A05B]/20 rounded-md text-[#F5EFE6] placeholder-[#9E91A8]/60 focus:outline-none focus:border-[#D9A05B]" />
+                </div>
+
+                <!-- Payment Method Selector & Interactive Copy -->
+                <div class="space-y-2">
+                    <label class="text-[11px] font-semibold uppercase tracking-wider text-[#D9A05B]">Método de Pago Preferido</label>
+                    <select id="payment-method-select" onchange="onPaymentMethodChange()" class="w-full px-3 py-2 bg-[#0C0712] border border-[#D9A05B]/20 rounded-md text-[#F5EFE6] text-xs focus:outline-none focus:border-[#D9A05B]">
+                        <option value="nequi">Nequi (Transferencia Directa)</option>
+                        <option value="daviplata">Daviplata (Transferencia Directa)</option>
+                        <option value="bre-b">Llave Bre-B</option>
+                        <option value="contraentrega">Efectivo / Datáfono Contra Entrega (Solo Cali)</option>
+                    </select>
+
+                    <!-- Interactive Payment Copy Box -->
+                    <div id="payment-copy-box" class="bg-[#0C0712] p-2.5 rounded-lg border border-[#D9A05B]/20 flex items-center justify-between text-xs">
+                        <div>
+                            <span id="payment-copy-label" class="text-[10px] text-[#9E91A8] block">Número Nequi:</span>
+                            <span id="payment-copy-val" class="font-mono text-[#F3DEBA] font-bold">3113296313</span>
+                        </div>
+                        <button type="button" onclick="copyPaymentNumber()" class="px-2.5 py-1 rounded bg-[#D9A05B]/20 hover:bg-[#D9A05B]/30 border border-[#D9A05B]/40 text-[#F3DEBA] text-[11px] font-medium transition-colors flex items-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i> Copiar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Summary Totals -->
+                <div class="space-y-1 text-xs border-t border-[#D9A05B]/20 pt-3">
+                    <div class="flex justify-between text-[#9E91A8]">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal">$0 COP</span>
+                    </div>
+                    <div class="flex justify-between text-[#9E91A8]">
+                        <span>Costo de Envío:</span>
+                        <span id="cart-shipping-cost">$0 COP</span>
+                    </div>
+                    <div class="flex justify-between text-base font-serif font-bold text-[#F3DEBA] pt-1 border-t border-[#D9A05B]/10">
+                        <span>TOTAL A PAGAR:</span>
+                        <span id="cart-grand-total">$0 COP</span>
+                    </div>
+                </div>
+
+                <!-- Dispatch Button -->
+                <button onclick="processWhatsAppCheckout()" class="w-full py-3.5 rounded-lg bg-[#D9A05B] text-[#0C0712] font-semibold text-xs uppercase tracking-[0.15em] hover:bg-[#F3DEBA] transition-colors shadow-lg flex items-center justify-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>Confirmar Orden y Enviar a WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ORDER CONFIRMATION -->
+    <div id="order-confirmation-modal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-[#0C0712]/85 backdrop-blur-md"></div>
+        <div class="bg-[#150C20] border border-[#D9A05B]/40 rounded-2xl max-w-lg w-full p-8 relative z-10 shadow-2xl text-center space-y-6">
+            <div class="w-16 h-16 rounded-full bg-[#D9A05B]/20 border border-[#D9A05B] text-[#D9A05B] mx-auto flex items-center justify-center">
+                <i data-lucide="check" class="w-8 h-8"></i>
+            </div>
+
+            <div class="space-y-2">
+                <span id="order-confirm-id" class="inline-block px-3 py-1 rounded-full bg-[#D9A05B]/10 border border-[#D9A05B]/30 text-xs font-mono text-[#F3DEBA]">#PRANA-0000</span>
+                <h3 class="font-serif text-3xl font-medium text-[#F5EFE6]">¡Orden Registrada con Éxito!</h3>
+                <p class="text-xs text-[#9E91A8] leading-relaxed">
+                    Hemos abierto la ventana de WhatsApp con los detalles de tu pedido. Si tu navegador bloqueó la pestaña, puedes continuar el chat directamente.
+                </p>
+            </div>
+
+            <div class="bg-[#0C0712] border border-[#D9A05B]/20 p-4 rounded-xl text-xs text-left space-y-2">
+                <p class="text-[#F3DEBA] font-semibold">Instrucción de Pago:</p>
+                <p class="text-[#9E91A8]">
+                    Por favor adjunta el comprobante de transferencia al chat de WhatsApp (+57 311 329 6313) indicando tu número de orden para programar tu despacho de inmediato.
+                </p>
+            </div>
+
+            <button onclick="closeOrderConfirmationModal()" class="w-full py-3 rounded-lg bg-[#D9A05B] text-[#0C0712] font-semibold text-xs uppercase tracking-wider hover:bg-[#F3DEBA] transition-colors">
+                Entendido, Continuar Navegando
+            </button>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[60] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- JS Application File -->
+    <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+/* ==========================================================================
+   PRANA (PRANA & APANA) - LUXURY ESOTERIC VISUAL IDENTITY (VERSION 1)
+   ========================================================================== */
+
+/* Design Tokens & Smooth Scrolling */
+:root {
+    --color-bg-base: #0C0712;
+    --color-bg-surface: #150C20;
+    --color-gold-accent: #D9A05B;
+    --color-gold-light: #F3DEBA;
+    --color-text-primary: #F5EFE6;
+    --color-text-muted: #9E91A8;
+    --color-gold-border: rgba(217, 160, 91, 0.2);
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0C0712;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #150C20;
+    border: 1px solid rgba(217, 160, 91, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #D9A05B;
+}
+
+/* Background Starlight Canvas Positioning */
+#starlight-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Slow Spin Animation for Oracle Compass */
+@keyframes spinSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-slow {
+    animation: spinSlow 12s linear infinite;
+}
+
+/* Pulse Glow Animation */
+@keyframes goldGlow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(217, 160, 91, 0.15);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(217, 160, 91, 0.35);
+    }
+}
+
+.glow-gold {
+    animation: goldGlow 4s ease-in-out infinite;
+}
+
+/* Product Card Styling & Hover */
+.product-card {
+    background: #150C20;
+    border: 1px solid rgba(217, 160, 91, 0.2);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+    border-color: rgba(217, 160, 91, 0.6);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -10px rgba(12, 7, 18, 0.8), 0 0 20px rgba(217, 160, 91, 0.15);
+}
+
+/* Modal and Drawer Backdrop Blur Controls */
+.modal-open {
+    overflow: hidden;
+}
+
+/* Toast Notifications */
+.toast-notice {
+    background: #150C20;
+    border: 1px solid rgba(217, 160, 91, 0.4);
+    color: #F5EFE6;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    font-size: 0.825rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Image Zoom Effect */
+.img-zoom {
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .img-zoom {
+    transform: scale(1.06);
+}
